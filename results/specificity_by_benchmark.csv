@@ -1,0 +1,13 @@
+method,1,2,3,4,5,Average
+"Ensemble (SVM+RF+LR, late features)",0.594,0.985,0.801,0.976,0.981,0.867
+Logistic Regression (combined features),0.568,0.978,0.768,0.982,0.995,0.858
+Logistic Regression (early features),0.353,0.95,0.62,0.572,1.0,0.699
+Logistic Regression (late features),0.591,0.985,0.804,0.981,0.993,0.871
+Proposed CNN (end-to-end),0.895,0.984,0.781,0.917,0.839,0.884
+Random Forest (combined features),0.448,0.985,0.826,0.925,0.989,0.835
+Random Forest (early features),0.257,0.993,0.777,0.591,1.0,0.723
+Random Forest (late features),0.594,0.987,0.835,0.958,0.805,0.836
+Reference Baseline CNN (end-to-end),0.873,0.99,0.898,0.929,0.987,0.935
+SVM (combined features),0.577,0.987,0.779,0.99,0.986,0.864
+SVM (early features),0.346,0.99,0.798,0.67,1.0,0.761
+SVM (late features),0.593,0.987,0.767,0.944,0.967,0.851

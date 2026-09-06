@@ -1,0 +1,6 @@
+benchmark,reference_baseline_inference_sec_per_img,proposed_cnn_inference_sec_per_img,feature_dims,reference_baseline_params,proposed_cnn_params
+1,0.001219,0.002043,"{'early': 64, 'late': 128, 'combined': 192}",6949,163489
+2,0.001114,0.001263,"{'early': 64, 'late': 128, 'combined': 192}",6949,163489
+3,0.001078,0.001182,"{'early': 64, 'late': 128, 'combined': 192}",6949,163489
+4,0.00113,0.001251,"{'early': 64, 'late': 128, 'combined': 192}",6949,163489
+5,0.00108,0.001358,"{'early': 64, 'late': 128, 'combined': 192}",6949,163489
