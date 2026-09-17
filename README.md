@@ -25,6 +25,8 @@ We train a residual, depthwise-separable CNN from scratch on each of the five IC
 │   ├── balanced_accuracy_by_benchmark.csv
 │   └── timing_and_dims.csv     
 ├── figures/
+│   ├── proposed_architecture.png    # Flowchart: residual backbone + classical classifiers
+│   ├── baseline_architecture.png    # Flowchart: reference baseline CNN
 │   ├── class_distribution.png       # HS/NHS imbalance per benchmark (log scale)
 │   ├── balanced_accuracy_comparison.png
 │   ├── confusion_matrices.png       # Row-normalized, 5 methods x 5 benchmarks
@@ -46,10 +48,64 @@ We train a residual, depthwise-separable CNN from scratch on each of the five IC
 
 All five benchmarks are highly imbalanced, and per the assignment's requirement, **each is evaluated separately** — never merged for primary experiments.
 
+## Architecture
+
+### Reference Baseline CNN
+
+```mermaid
+flowchart TD
+    A["Input<br/>H×W×1 (clip image)"] --> B["Basic Block 1 (filters=12)<br/>Conv3×3→elu ×2 + Conv3×3(linear)<br/>BatchNorm → elu → MaxPool 2×2"]
+    B --> C["MaxPool 5×5<br/>(extra pool)"]
+    C --> D["Basic Block 2 (filters=12)<br/>Conv3×3→elu ×2 + Conv3×3(linear)<br/>BatchNorm → elu → MaxPool 2×2"]
+    D --> E["Flatten"]
+    E --> F["Dropout (0.3)"]
+    F --> G["Dense(1), sigmoid"]
+    G --> H(["HS / NHS"])
+```
+
+Faithful reimplementation of the reference paper's lightweight CNN (Fig. 6/7, Table I). Optimizer: **Nadam**, loss: **Focal Loss (γ=2.0, α=0.75)** — same imbalance-aware loss used throughout this study, so every model in the comparison is trained under the same imbalance-handling strategy and only the loss's effect on architecture-vs-representation differences is being measured. Threshold tuned on the validation split. **6,949 parameters.** Trained end-to-end only and never used for feature extraction — it exists purely as the fixed point of comparison, per the assignment's "common baseline" requirement.
+
+See `figures/baseline_architecture.png` for the full annotated diagram.
+
+### Proposed Architecture
+
+```mermaid
+flowchart TD
+    A["Input H×W×1"] --> S["Stem: Conv3×3(32) → BN → ReLU → MaxPool 2×2"]
+    S --> R1["Residual Block 1 (64 filters)<br/>SepConv3×3 ×2 + BN, skip-add, ReLU, SpatialDropout(0.1)"]
+    R1 --> M1["MaxPool 2×2"]
+    M1 --> ET["Early Tap: GlobalAvgPool → 64-d (early_features)"]
+    M1 --> R2["Residual Block 2 (128 filters)<br/>SepConv3×3 ×2 + BN, skip-add, ReLU, SpatialDropout(0.1)"]
+    R2 --> M2["MaxPool 2×2"]
+    M2 --> R3["Residual Block 3 (192 filters)<br/>SepConv3×3 ×2 + BN, skip-add, ReLU, SpatialDropout(0.1)"]
+    R3 --> GAP["GlobalAvgPool"]
+    GAP --> LT["Late Tap: Dense(128) ReLU (late_features)"]
+    LT --> DO["Dropout (0.5)"]
+    DO --> D1["Dense(1), sigmoid"]
+    D1 --> OUT1(["End-to-End Output: HS / NHS"])
+
+    ET --> COMB["Combined = Early ⊕ Late (192-d)"]
+    LT --> COMB
+    COMB --> ABL["Ablation: SVM / RF / LR on Early-alone AND Combined features<br/>(weaker on average — see report)"]
+
+    LT --> SC["StandardScaler (late_features)"]
+    SC --> SVM["SVM (RBF kernel)"]
+    SC --> RF["Random Forest"]
+    SC --> LR["Logistic Regression"]
+    SVM --> ENS["★ Ensemble — soft-vote of SVM + RF + LR (late features only)"]
+    RF --> ENS
+    LR --> ENS
+    ENS --> OUT2(["Main Proposed Output: HS / NHS"])
+```
+
+Backbone: residual, depthwise-separable CNN (3 residual blocks: 64 → 128 → 192 filters, L2-regularized), trained end-to-end **and** reused as a feature extractor. Optimizer: **Adam**, loss: **Focal Loss (γ=2.0, α=0.75)**. **163,489 parameters.** `early` = post-Res-Block-1 GAP (64-d), `late` = pre-head Dense (128-d), `combined` = early⊕late (192-d). The headline classical result is the **Ensemble on late features** (0.894 avg. balanced accuracy) — early and combined features are ablations only, and are never merged into the ensemble path.
+
+See `figures/proposed_architecture.png` for the full annotated diagram.
+
 ## Methodology
 
 ### 1. Reference Baseline (fixed, external)
-A faithful reimplementation of the reference paper's lightweight CNN (Fig. 6/7, Table I): two stacked basic blocks (3× `Conv2D(12, 3×3)` → BatchNorm → elu → MaxPool), separated by an extra 5×5 max-pool, followed by Flatten → Dropout(0.3) → sigmoid. Trained with Nadam. **6,949 parameters.** This model is trained end-to-end only and never used for feature extraction — it exists purely as the fixed point of comparison, per the assignment's "common baseline" requirement.
+A faithful reimplementation of the reference paper's lightweight CNN (Fig. 6/7, Table I): two stacked basic blocks (3× `Conv2D(12, 3×3)` → BatchNorm → elu → MaxPool), separated by an extra 5×5 max-pool, followed by Flatten → Dropout(0.3) → sigmoid. Trained with Nadam and Focal Loss (γ=2.0, α=0.75) — the same loss used for the proposed model, so the comparison isolates architecture/representation differences rather than differences in how class imbalance is handled. **6,949 parameters.** This model is trained end-to-end only and never used for feature extraction — it exists purely as the fixed point of comparison, per the assignment's "common baseline" requirement.
 
 ### 2. Proposed Backbone
 A residual CNN with depthwise-separable convolutions (3 residual blocks: 64 → 128 → 192 filters, L2-regularized, with `SpatialDropout2D`), trained end-to-end with **focal loss** (γ=2.0, α=0.75) to address class imbalance directly in the loss function. **163,489 parameters.**
@@ -131,4 +187,3 @@ Early vs. late feature depth (see `figures/all_metrics_comparison.png`): late-la
 4. Y.-T. Yu et al., "Machine-Learning-Based Hotspot Detection Using Topological Classification and Critical Feature Extraction," IEEE TCAD, 2015.
 5. J.-R. Gao, B. Yu, D. Z. Pan, "Accurate Lithography Hotspot Detection Based on PCA-SVM Classifier," Proc. SPIE, 2014.
 6. S. Dieleman, K. W. Willett, J. Dambre, "Rotation-invariant CNNs for galaxy morphology prediction," arXiv:1507.02313, 2015.
-
