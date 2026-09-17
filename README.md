@@ -188,5 +188,6 @@ Early vs. late feature depth (see `figures/all_metrics_comparison.png`): late-la
 5. J.-R. Gao, B. Yu, and D. Z. Pan, “Accurate Lithography Hotspot Detection Based on PCA-SVM Classifier with Hierarchical Data Clustering,” Proc. SPIE, 2014.
 6. L. Liao, S. Li, Y. Che, W. Shi, and X. Wang, “Lithography Hotspot Detection Method Based on Transfer Learning Using Pre-Trained Deep Convolutional Neural Network,” Applied Sciences, vol. 12, 2192, 2022, doi: 10.3390/app12042192.
 7. S. Dieleman, K. W. Willett, and J. Dambre, “Rotation-invariant convolutional neural networks for galaxy morphology prediction,” arXiv:1507.02313, 2015.
-8. K. He, X. Zhang, S. Ren, and J. Sun, “Deep Residual Learning for Image Recognition,” in Proc. IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016, pp. 770–778; and A. G. Howard et al., “MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications,” arXiv:1704.04861, 2017.
+8. K. He, X. Zhang, S. Ren, and J. Sun, “Deep Residual Learning for Image Recognition,” in Proc. IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016, pp. 770–778.
+9. A. G. Howard et al., “MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications,” arXiv:1704.04861, 2017.
 
