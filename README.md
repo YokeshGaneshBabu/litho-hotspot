@@ -181,9 +181,12 @@ Early vs. late feature depth (see `figures/all_metrics_comparison.png`): late-la
 
 ## References
 
-1. V. Borisov and J. Scheible, "Lithography Hotspots Detection Using Deep Learning," SMACD 2018, pp. 145-148.
-2. Liao, L. et al., "Lithography Hotspot Detection Method Based on Transfer Learning Using Pre-Trained Deep CNN," Appl. Sci. 12, 2192, 2022.
-3. H. Yang, Y. Lin, B. Yu, E. F. Y. Young, "Lithography Hotspot Detection: From Shallow to Deep Learning," SOCC 2017, pp. 233-238.
-4. Y.-T. Yu et al., "Machine-Learning-Based Hotspot Detection Using Topological Classification and Critical Feature Extraction," IEEE TCAD, 2015.
-5. J.-R. Gao, B. Yu, D. Z. Pan, "Accurate Lithography Hotspot Detection Based on PCA-SVM Classifier," Proc. SPIE, 2014.
-6. S. Dieleman, K. W. Willett, J. Dambre, "Rotation-invariant CNNs for galaxy morphology prediction," arXiv:1507.02313, 2015.
+[1] A. Verma, K. A. Rao, and D. S. Hegde, “Lithography Hotspot Detection using Deep Learning,” IIT Bombay (reference paper for this assignment).
+[2] V. Borisov and J. Scheible, “Lithography Hotspots Detection Using Deep Learning,” SMACD 2018, pp. 145–148, doi: 10.1109/SMACD.2018.8434561.
+[3] H. Yang, Y. Lin, B. Yu, and E. F. Y. Young, “Lithography Hotspot Detection: From Shallow to Deep Learning,” SOCC 2017, pp. 233–238, doi: 10.1109/SOCC.2017.8226047.
+[4] Y.-T. Yu, G.-H. Lin, I. H.-R. Jiang, and C. Chiang, “Machine-Learning-Based Hotspot Detection Using Topological Classification and Critical Feature Extraction,” IEEE Trans. Computer-Aided Design of Integrated Circuits and Systems, 2015.
+[5] J.-R. Gao, B. Yu, and D. Z. Pan, “Accurate Lithography Hotspot Detection Based on PCA-SVM Classifier with Hierarchical Data Clustering,” Proc. SPIE, 2014.
+[6] L. Liao, S. Li, Y. Che, W. Shi, and X. Wang, “Lithography Hotspot Detection Method Based on Transfer Learning Using Pre-Trained Deep Convolutional Neural Network,” Applied Sciences, vol. 12, 2192, 2022, doi: 10.3390/app12042192.
+[7] S. Dieleman, K. W. Willett, and J. Dambre, “Rotation-invariant convolutional neural networks for galaxy morphology prediction,” arXiv:1507.02313, 2015.
+[8] K. He, X. Zhang, S. Ren, and J. Sun, “Deep Residual Learning for Image Recognition,” in Proc. IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016, pp. 770–778; and A. G. Howard et al., “MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications,” arXiv:1704.04861, 2017.
+
