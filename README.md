@@ -81,7 +81,7 @@ Requires a GPU-enabled environment (Kaggle / Colab recommended) — CNN training
 
 ## Usage
 
-1. Open `DA2_Group5_Full_Pipeline.ipynb` in Kaggle or Colab.
+1. Open `Features_Full_Pipeline.ipynb` in Kaggle or Colab.
 2. Enable GPU (Settings → Accelerator → GPU) and Internet access.
 3. Run all cells top to bottom. The pipeline:
    - Downloads and extracts the ICCAD-12 dataset
